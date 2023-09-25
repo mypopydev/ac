@@ -32,8 +32,7 @@ THE SOFTWARE.
 #include <string>
 
 struct {
-  static std::pair<double,double> getProbability( char c )
-  {
+  static std::pair<double,double> getProbability(char c) {
     if (c >= 'A' && c <= 'Z')
       return std::make_pair( (c - 'A') * .01, (c - 'A') * .01 + .01);
     else if (c >= 'a' && c <= 'z')
@@ -41,26 +40,25 @@ struct {
     else
       throw "character out of range";
   }
-  static char getSymbol( double d)
-  {
-    if ( d >= 0.0 && d < 0.26)
+  static char getSymbol(double d) {
+    if (d >= 0.0 && d < 0.26)
       return 'A' + static_cast<int>(d*100);
-    else if ( d >= 0.3 && d < 0.82)
+    else if (d >= 0.3 && d < 0.82)
       return 'a' + static_cast<int>((d-0.3)*50);
     else
       throw "message out of range";
   }
 } model;
 
-double compress( std::string s)
+double compress(std::string s)
 {
   double high = 1.0;
-  double low = 0.0;
+  double low  = 0.0;
   for ( char c : s ) {
     std::pair<double,double> p = model.getProbability(c);
     double range = high - low;
     high = low + range * p.second;
-    low = low + range * p.first; 
+    low  = low + range * p.first; 
   }
   return low + (high-low)/2;
 }
@@ -69,9 +67,8 @@ std::string decompress(double message)
 {
   std::string result;
   double high = 1.0;
-  double low = 0.0;
-  for ( ; ; ) 
-  {
+  double low  = 0.0;
+  for ( ; ; ) {
     double range = high - low;
     char c = model.getSymbol((message - low)/range);
     result += c;
