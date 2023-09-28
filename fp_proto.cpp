@@ -76,7 +76,7 @@ std::string decompress(double message)
       return result;
     std::pair<double,double> p = model.getProbability(c);
     high = low + range * p.second;
-    low = low + range * p.first; 
+    low  = low + range * p.first; 
   }
 }
 
@@ -84,7 +84,7 @@ int main(int, char **)
 {
   double val = compress("WXYZ");
   //double val = compress("abcdWXYZ"); //this will be more interesting
-  std::cout << "Compressed value: " 
+  std::cout << "Compressed value:    " 
             << std::setprecision(15)
             << val << "\n";
   std::string result = decompress(val);
